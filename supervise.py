@@ -21,5 +21,6 @@ print(y_test.head())
 # Decision Trees
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(x_train,y_train)
-predictions = clf.predict(x_test,y_test)
-print(predictions)
+predictions = clf.predict(x_test)
+print(predictions[0:5])
+print(clf.score(y_test,predictions))
