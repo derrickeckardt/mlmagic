@@ -8,15 +8,16 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import KFold
 
 
-dataset, classcolumn, headers = sys.argv[1:]
+dataset, classcolumn, headers, folds = sys.argv[1:]
 headers = None if headers == "None" else headers
 classcolumn = int(classcolumn) if headers == None else classcolumn
+folds = int(folds)
 
 data = pd.read_csv(dataset, header=headers)
 class_column = data[classcolumn]
 class_data = data.drop(classcolumn,1)
 
-folds = 10
+# folds = 50
 kf = KFold(n_splits=folds, shuffle=True)
 count = 1
 accuracy_total = 0
