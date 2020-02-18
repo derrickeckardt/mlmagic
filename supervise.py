@@ -48,4 +48,4 @@ for train_index, test_index in kf.split(class_data):
     
 for clf_name, classifier in classifiers:
     accuracies[clf_name]['average'] = accuracies[clf_name]['total'] / folds
-    print('average_accuracy for classifier"',clf_name,'"with',folds,"folds is:",accuracies[clf_name]['average'])
+    print('average_accuracy for classifier ',clf_name.upper(),' with',folds,"folds is:",accuracies[clf_name]['average'])
