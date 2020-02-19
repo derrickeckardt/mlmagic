@@ -14,6 +14,7 @@ from sklearn.gaussian_process.kernels import RBF
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from statistics import stdev, mean
 
 dataset, classcolumn, headers, folds = sys.argv[1:]
 headers = None if headers == "None" else headers
@@ -45,7 +46,7 @@ classifiers = [('Decision Tree',DecisionTreeClassifier(max_depth=5)),
 
 for clf_name, classifier in classifiers:
     accuracies[clf_name] = {}
-    accuracies[clf_name]['total'] = 0
+    accuracies[clf_name]['total'] = []
 for train_index, test_index in kf.split(class_data):
     # print("TRAIN:", train_index, "TEST:", test_index)
 
@@ -62,8 +63,9 @@ for train_index, test_index in kf.split(class_data):
         accuracy = accuracy_score(y_test,predictions)
         # print('fold:',count,'accuracy:',accuracy)
         count +=1 
-        accuracies[clf_name]['total'] += accuracy
+        accuracies[clf_name]['total'].append(accuracy)
     
 for clf_name, classifier in classifiers:
-    accuracies[clf_name]['average'] = accuracies[clf_name]['total'] / folds
-    print('average_accuracy for classifier ',clf_name.upper(),' with',folds,"folds is:",accuracies[clf_name]['average'])
+    accuracies[clf_name]['average'] = mean(accuracies[clf_name]['total'])
+    accuracies[clf_name]['stdev'] = stdev(accuracies[clf_name]['total'])
+    print('average_accuracy for classifier ',clf_name.upper(),' with',folds,"folds is:",accuracies[clf_name]['average']," with a standard deviation of:",accuracies[clf_name]['stdev'])
