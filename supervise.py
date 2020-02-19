@@ -7,7 +7,13 @@ from sklearn.model_selection import KFold
 from sklearn.metrics import accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-
+from sklearn.neural_network import MLPClassifier
+from sklearn.svm import SVC
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.gaussian_process.kernels import RBF
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
 dataset, classcolumn, headers, folds = sys.argv[1:]
 headers = None if headers == "None" else headers
@@ -24,7 +30,19 @@ class_data = data.drop(classcolumn,1)
 kf = KFold(n_splits=folds, shuffle=True)
 count = 1
 accuracies = {}
-classifiers = [('Decision Tree',DecisionTreeClassifier()),('kNN',KNeighborsClassifier(n_neighbors=neighbors))]
+classifiers = [('Decision Tree',DecisionTreeClassifier(max_depth=5)),
+                ('kNN',KNeighborsClassifier(n_neighbors=neighbors)),
+                ('Support Vector Linear', SVC(kernel="linear", C=0.025)),
+                ('Support Vector Radial', SVC(gamma=2, C=1)),
+                ('Gaussian',GaussianProcessClassifier(1.0 * RBF(1.0))),
+                ('Random Forest',RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1)),
+                ('Neural Net',MLPClassifier(alpha=1, max_iter=1000)),
+                ('AdaBoost',AdaBoostClassifier()),
+                ('Naive Bayes',GaussianNB()),
+                ('Quadratic Discrimation',QuadraticDiscriminantAnalysis())
+                ]
+
+
 for clf_name, classifier in classifiers:
     accuracies[clf_name] = {}
     accuracies[clf_name]['total'] = 0
