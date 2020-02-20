@@ -30,23 +30,22 @@ class_column = data[classcolumn]
 class_data = data.drop(classcolumn,1)
 
 # Create Cross-validation
-kf = KFold(n_splits=folds, shuffle=True)
-classifiers = [('Decision Tree',DecisionTreeClassifier(max_depth=5)),
-                ('kNN',KNeighborsClassifier(n_neighbors=neighbors)),
-                ('Support Vector Linear', SVC(kernel="linear", C=0.025)),
-                ('Support Vector Radial', SVC(gamma=2, C=1)),
-                ('Gaussian',GaussianProcessClassifier(1.0 * RBF(1.0))),
-                ('Random Forest',RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1)),
-                ('Neural Net',MLPClassifier(alpha=1, max_iter=1000)),
-                ('AdaBoost',AdaBoostClassifier()),
-                ('Naive Bayes',GaussianNB()),
-                ('Quadratic Discrimation',QuadraticDiscriminantAnalysis())
-                ]
 
-
-def multiclass(kf,class_data,class_column,classifiers):
+def multiclass(folds,class_data,class_column):
 
     accuracies = {}
+    kf = KFold(n_splits=folds, shuffle=True)
+    classifiers = [('Decision Tree',DecisionTreeClassifier(max_depth=5)),
+                    ('kNN',KNeighborsClassifier(n_neighbors=neighbors)),
+                    ('Support Vector Linear', SVC(kernel="linear", C=0.025)),
+                    ('Support Vector Radial', SVC(gamma=2, C=1)),
+                    ('Gaussian',GaussianProcessClassifier(1.0 * RBF(1.0))),
+                    ('Random Forest',RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1)),
+                    ('Neural Net',MLPClassifier(alpha=1, max_iter=1000)),
+                    ('AdaBoost',AdaBoostClassifier()),
+                    ('Naive Bayes',GaussianNB()),
+                    ('Quadratic Discrimation',QuadraticDiscriminantAnalysis())
+                    ]
 
     for clf_name, classifier in classifiers:
         accuracies[clf_name] = {}
@@ -69,8 +68,8 @@ def multiclass(kf,class_data,class_column,classifiers):
         accuracies[clf_name]['average'] = mean(accuracies[clf_name]['total'])
         accuracies[clf_name]['stdev'] = stdev(accuracies[clf_name]['total'])
     
-    return accuracies
+    return accuracies, classifiers
 
-accuracies = multiclass(kf,class_data,class_column,classifiers)
+accuracies, classifiers = multiclass(folds,class_data,class_column)
 for clf_name, classifier in classifiers:
     print('average_accuracy for classifier ',clf_name.upper(),' with',folds,"folds is:",accuracies[clf_name]['average']," with a standard deviation of:",accuracies[clf_name]['stdev'])
