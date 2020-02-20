@@ -18,7 +18,8 @@ from statistics import stdev, mean
 import cProfile
 
 # Inputs
-dataset, classcolumn, headers, folds = sys.argv[1:]
+# dataset, classcolumn, headers, folds = sys.argv[1:]
+dataset, classcolumn, headers, folds = ['iris.data',4,None,5]
 headers = None if headers == "None" else headers
 classcolumn = int(classcolumn) if headers == None else classcolumn
 folds = int(folds)
