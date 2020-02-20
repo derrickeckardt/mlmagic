@@ -43,25 +43,34 @@ classifiers = [('Decision Tree',DecisionTreeClassifier(max_depth=5)),
                 ('Quadratic Discrimation',QuadraticDiscriminantAnalysis())
                 ]
 
-accuracies = {}
-for clf_name, classifier in classifiers:
-    accuracies[clf_name] = {}
-    accuracies[clf_name]['total'] = []
 
-for train_index, test_index in kf.split(class_data):
-    # x_train, x_test, y_train, y_test = train_test_split(class_data, class_column, test_size = i/10)
-    x_train, y_train = class_data.iloc[train_index], class_column.iloc[train_index]
-    x_test, y_test = class_data.iloc[test_index], class_column.iloc[test_index]
+def multiclass(kf,class_data,class_column,classifiers):
 
-    # Cycle through all the classifiers, for this dataset
+    accuracies = {}
+
     for clf_name, classifier in classifiers:
-        clf = classifier
-        clf = clf.fit(x_train,y_train)
-        predictions = clf.predict(x_test)
-        accuracy = accuracy_score(y_test,predictions)
-        accuracies[clf_name]['total'].append(accuracy)
+        accuracies[clf_name] = {}
+        accuracies[clf_name]['total'] = []
     
+    for train_index, test_index in kf.split(class_data):
+        # x_train, x_test, y_train, y_test = train_test_split(class_data, class_column, test_size = i/10)
+        x_train, y_train = class_data.iloc[train_index], class_column.iloc[train_index]
+        x_test, y_test = class_data.iloc[test_index], class_column.iloc[test_index]
+    
+        # Cycle through all the classifiers, for this dataset
+        for clf_name, classifier in classifiers:
+            clf = classifier
+            clf = clf.fit(x_train,y_train)
+            predictions = clf.predict(x_test)
+            accuracy = accuracy_score(y_test,predictions)
+            accuracies[clf_name]['total'].append(accuracy)
+        
+    for clf_name, classifier in classifiers:
+        accuracies[clf_name]['average'] = mean(accuracies[clf_name]['total'])
+        accuracies[clf_name]['stdev'] = stdev(accuracies[clf_name]['total'])
+    
+    return accuracies
+
+accuracies = multiclass(kf,class_data,class_column,classifiers)
 for clf_name, classifier in classifiers:
-    accuracies[clf_name]['average'] = mean(accuracies[clf_name]['total'])
-    accuracies[clf_name]['stdev'] = stdev(accuracies[clf_name]['total'])
     print('average_accuracy for classifier ',clf_name.upper(),' with',folds,"folds is:",accuracies[clf_name]['average']," with a standard deviation of:",accuracies[clf_name]['stdev'])
