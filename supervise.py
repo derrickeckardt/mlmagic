@@ -17,12 +17,13 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from statistics import stdev, mean
 import cProfile
 
+# create data sets
 def create_column_class(dataset, classcolumn, headers):
     # Read in Datafile
     data = pd.read_csv(dataset, header=headers)
     class_column = data[classcolumn]
     class_data = data.drop(classcolumn,1)
-    return data, class_column, class_data
+    return data, class_data, class_column
 
 # Create Cross-validation
 def multiclass(folds,class_data,class_column):
