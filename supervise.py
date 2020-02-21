@@ -17,27 +17,19 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from statistics import stdev, mean
 import cProfile
 
-# Inputs
-# dataset, classcolumn, headers, folds = sys.argv[1:]
-dataset, classcolumn, headers, folds = ['iris.data',4,None,5]
-headers = None if headers == "None" else headers
-classcolumn = int(classcolumn) if headers == None else classcolumn
-folds = int(folds)
-neighbors = 3
-
-# Read in Datafile
-data = pd.read_csv(dataset, header=headers)
-class_column = data[classcolumn]
-class_data = data.drop(classcolumn,1)
+def create_column_class(dataset, classcolumn, headers):
+    # Read in Datafile
+    data = pd.read_csv(dataset, header=headers)
+    class_column = data[classcolumn]
+    class_data = data.drop(classcolumn,1)
+    return data, class_column, class_data
 
 # Create Cross-validation
-
 def multiclass(folds,class_data,class_column):
-
     accuracies = {}
     kf = KFold(n_splits=folds, shuffle=True)
     classifiers = [('Decision Tree',DecisionTreeClassifier(max_depth=5)),
-                    ('kNN',KNeighborsClassifier(n_neighbors=neighbors)),
+                    ('kNN',KNeighborsClassifier(n_neighbors=3)),
                     ('Support Vector Linear', SVC(kernel="linear", C=0.025)),
                     ('Support Vector Radial', SVC(gamma=2, C=1)),
                     ('Gaussian',GaussianProcessClassifier(1.0 * RBF(1.0))),
@@ -70,7 +62,3 @@ def multiclass(folds,class_data,class_column):
         accuracies[clf_name]['stdev'] = stdev(accuracies[clf_name]['total'])
     
     return accuracies, classifiers
-
-accuracies, classifiers = multiclass(folds,class_data,class_column)
-for clf_name, classifier in classifiers:
-    print('average_accuracy for classifier ',clf_name.upper(),' with',folds,"folds is:",accuracies[clf_name]['average']," with a standard deviation of:",accuracies[clf_name]['stdev'])
