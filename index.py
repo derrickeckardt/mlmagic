@@ -17,6 +17,7 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from statistics import stdev, mean
 import cProfile
 import supervise
+import data
 
 # Inputs
 dataset, classcolumn, headers, folds = sys.argv[1:]

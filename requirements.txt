@@ -2,4 +2,3 @@ scikit-learn
 scipy
 pandas
 numpy
-Flask
