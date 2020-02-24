@@ -2,7 +2,7 @@ import unittest
 import pandas as pd
 import supervise
 
-class test_multiclass(unittest.TestCase):
+class test_supervise(unittest.TestCase):
 
     # Read in test Datafile
     def setUp(self):
@@ -30,8 +30,6 @@ class test_multiclass(unittest.TestCase):
             self.assertTrue(stdev)
             average = True if accuracies[clf_name]['average'] <= 1 and accuracies[clf_name]['average'] >= 0 else False
             self.assertTrue(average)
-
-
 
 if __name__ == '__main__':
     unittest.main()
