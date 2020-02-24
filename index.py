@@ -26,7 +26,7 @@ classcolumn = int(classcolumn) if headers == None else classcolumn
 folds = int(folds)
 
 # Get data and create column and data sets
-data, class_data, class_column = supervise.create_column_class(dataset,classcolumn,headers)
+data, class_data, class_column = data.create_column_class(dataset,classcolumn,headers)
 
 # Create Cross-validation
 accuracies, classifiers = supervise.multiclass(folds,class_data,class_column)
