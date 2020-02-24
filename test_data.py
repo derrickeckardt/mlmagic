@@ -1,5 +1,6 @@
 import unittest
 import data
+import pandas as pd
 
 class test_data(unittest.TestCase):
 
@@ -21,7 +22,11 @@ class test_data(unittest.TestCase):
         except:
             class_column_width = 1
         self.assertEqual(self.data.shape[1], class_column_width+class_data_width)
-        
+    
+    def test_basic_clean_data(self):
+        self.data, self.class_data, self.class_column = data.create_column_class(self.dataset, self.classcolumn, self.headers)
+        self.data = data.basic_clean_data(self.data)
+        self.assertEqual(self.data.isna().sum().sum(),0)
         
 if __name__ == '__main__':
     unittest.main()

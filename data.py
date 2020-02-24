@@ -6,10 +6,29 @@ import numpy as np
 def create_column_class(dataset, classcolumn, headers):
     # Read in Datafile
     data = pd.read_csv(dataset, header=headers)
-    data = clean_data(data)
+    data = basic_clean_data(data)
     class_column = data[classcolumn]
     class_data = data.drop(classcolumn,1)
     return data, class_data, class_column
 
-def clean_data(data):
+def basic_clean_data(data):
+    # sparse columns
+        # dropping columns
+    # Missing rows
+        # using the mode or the mean
+    # Null, NaN, None
+    
+    # Extreme outliers
+    missing_values = data.isna().sum().sum()
+
+    
+    ## advanced cleaning
+    # Address formatting
+    # data formatting
+    # spell checking
+    
+    
+    
+    
+    
     return data
