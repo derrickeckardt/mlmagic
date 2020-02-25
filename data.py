@@ -12,11 +12,15 @@ def create_column_class(dataset, classcolumn, headers):
     return data, class_data, class_column
 
 def basic_clean_data(data):
+    # Null, NaN, None
+    # Since data already loaded
+
     # sparse columns
         # dropping columns
     # Missing rows
         # using the mode or the mean
-    # Null, NaN, None
+    
+    
     
     # Extreme outliers
     missing_values = data.isna().sum().sum()
