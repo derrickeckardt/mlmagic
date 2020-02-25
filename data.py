@@ -12,8 +12,13 @@ def create_column_class(dataset, classcolumn, headers):
     return data, class_data, class_column
 
 def basic_clean_data(data):
+    # clear blanks, empty strings, NaN, N/A
+    data = data.applymap(lambda x: np.nan if isinstance(x, str) and (not x or x.isspace()) else x)
+    # does not change 'Na' or 'NAN'
+    print(data.head())
     # Null, NaN, None
     # Since data already loaded
+    
 
     # sparse columns
         # dropping columns
