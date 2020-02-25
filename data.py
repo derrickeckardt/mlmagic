@@ -14,14 +14,16 @@ def create_column_class(dataset, classcolumn, headers):
 def basic_clean_data(data):
     # clear blanks, empty strings, NaN, N/A
     data = data.applymap(lambda x: np.nan if isinstance(x, str) and (not x or x.isspace()) else x)
-    # does not change 'Na' or 'NAN'
+    # does not change 'Na' or 'NAN' or -
     print(data.head())
+    
+    # issue warning about other ways it will not catch
+    
     # Null, NaN, None
     # Since data already loaded
     
-
     # sparse columns
-        # dropping columns
+        # dropping columns with na
     # Missing rows
         # using the mode or the mean
     
@@ -29,7 +31,7 @@ def basic_clean_data(data):
     
     # Extreme outliers
     missing_values = data.isna().sum().sum()
-
+    print(missing_values)
     
     ## advanced cleaning
     # Address formatting
