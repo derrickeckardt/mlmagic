@@ -27,7 +27,7 @@ def basic_clean_data(data):
     # Missing rows
         # using the mode or the mean
     
-    
+    # Look for data that is out of place, a number when all th other respons are yes no
     
     # Extreme outliers
     missing_values = data.isna().sum().sum()
