@@ -27,11 +27,18 @@ def basic_clean_data(data):
     # First, identify how many
     threshold = 0.05
     na_values = data.isna().sum()
-    data_shape = data.shape()
+    row_na_values = data.isnull().any(axis=1).sum()
+    print(row_na_values)
+    data_shape = data.shape
     print(data_shape)
     
+    for row in row_na_values:
+        print(row)
+        
+    
     for column, na_count in zip(data.columns, na_values):
-        if na_count < data_shape[0]*threshold
+        if na_count < data_shape[0]*threshold:
+            print('oops')
 
     # sparse columns
         # dropping columns with na
