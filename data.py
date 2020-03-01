@@ -25,20 +25,28 @@ def drop_sparse_columns():
 
 def basic_clean_data(data):
     # First, identify how many
-    threshold = 0.05
+    row_drop_threshold = 0.05
     na_values = data.isna().sum()
-    row_na_values = data.isnull().any(axis=1).sum()
-    print(row_na_values)
+    row_na_count = data.isnull().any(axis=1).sum()
+    print(row_na_count)
     data_shape = data.shape
     print(data_shape)
     
-    for row in row_na_values:
-        print(row)
+    if row_na_count > data_shape[0]*row_drop_threshold:
+        # we can't just drop the rows
+        print(row_na_count)
+    else:
+        # just drop the rows
+        data = data.dropna(how='all')
+
+
+    # for row in row_na_values:
+    #     print(row)
         
     
-    for column, na_count in zip(data.columns, na_values):
-        if na_count < data_shape[0]*threshold:
-            print('oops')
+    # for column, na_count in zip(data.columns, na_values):
+    #     if na_count < data_shape[0]*threshold:
+    #         print('oops')
 
     # sparse columns
         # dropping columns with na
