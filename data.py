@@ -26,49 +26,40 @@ def drop_sparse_columns():
 def basic_clean_data(data):
     # First, identify how many
     row_drop_threshold = 0.05
-    na_values = data.isna().sum()
     row_na_count = data.isnull().any(axis=1).sum()
-    print(row_na_count)
+    na_values = data.isna().sum()
     data_shape = data.shape
-    print(data_shape)
-    
-    if row_na_count > data_shape[0]*row_drop_threshold:
+
+    if row_na_count <= data_shape[0]*row_drop_threshold:
+        # just drop the rows
+        data = data.dropna()
+        print('Data successfully cleaned')
+    else:
         # we can't just drop the rows
         print(row_na_count)
-    else:
-        # just drop the rows
-        data = data.dropna(how='all')
+        print("can't drop")
 
 
-    # for row in row_na_values:
-    #     print(row)
-        
     
     # for column, na_count in zip(data.columns, na_values):
     #     if na_count < data_shape[0]*threshold:
     #         print('oops')
 
+    #### Things to Check
     # sparse columns
         # dropping columns with na
     # Missing rows
         # using the mode or the mean
-    
     # Look for data that is out of place, a number when all th other respons are yes no
     
     # Extreme outliers
     
 
     
-    print(na_values)
-    
-    
-    ## advanced cleaning
+    ##### advanced cleaning
     # Address formatting
     # data formatting
+    # data formatting
     # spell checking
-    
-    
-    
-    
     
     return data
