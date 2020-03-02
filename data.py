@@ -33,6 +33,7 @@ def basic_clean_data(data):
     if row_na_count <= data_shape[0]*row_drop_threshold:
         # just drop the rows
         data = data.dropna()
+        # Option could be to just fill them with the mode
         print('Data successfully cleaned')
     else:
         # we can't just drop the rows
