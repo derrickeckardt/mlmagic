@@ -15,7 +15,7 @@ def create_column_class(dataset, classcolumn, headers):
 
 def get_missing_values():
     # Eventually add ability to determine which missing values
-    missing_values = ["n/a", "N/A","N/a","n/A","na","NA","Na","nA","NAN","-",""]
+    missing_values = ["n/a", "N/A","N/a","n/A","na","NA","Na","nA","NAN","-","", " ", "  "]
     # issue warning about other ways it will not catch
     return missing_values
 
@@ -25,20 +25,24 @@ def drop_sparse_columns():
 
 def basic_clean_data(data):
     # First, identify how many
-    row_drop_threshold = 0.05
+    row_drop_threshold = 0.01
     row_na_count = data.isnull().any(axis=1).sum()
     na_values = data.isna().sum()
     data_shape = data.shape
 
     if row_na_count <= data_shape[0]*row_drop_threshold:
         # just drop the rows
+        print('Dropping rows with values that are NaN')
         data = data.dropna()
         # Option could be to just fill them with the mode
         print('Data successfully cleaned')
     else:
         # we can't just drop the rows
-        print(row_na_count)
-        print("can't drop")
+        print("Changing all NaN values to modes")
+        for column in data.columns:
+            data[column].fillna(data[column].mode()[0], inplace=True)
+
+        print(data.head())
 
 
     
