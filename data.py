@@ -23,9 +23,10 @@ def drop_sparse_columns():
     
     return 
 
+# current system is too simplistic, but it's a start.
 def basic_clean_data(data):
     # First, identify how many
-    row_drop_threshold = 0.01
+    row_drop_threshold = 0.05
     row_na_count = data.isnull().any(axis=1).sum()
     na_values = data.isna().sum()
     data_shape = data.shape
@@ -42,7 +43,8 @@ def basic_clean_data(data):
             data[column].fillna(data[column].mode()[0], inplace=True)
         print('Data successfully cleaned')
 
-    # current item is too simplistic, but it's a start.
+    # Documentation Reference:
+    # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html
 
     #### Things to Handle Better
     # sparse columns
