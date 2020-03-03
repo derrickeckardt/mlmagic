@@ -35,36 +35,31 @@ def basic_clean_data(data):
         print('Dropping rows with values that are NaN')
         data = data.dropna()
         # Option could be to just fill them with the mode
-        print('Data successfully cleaned')
     else:
         # we can't just drop the rows
         print("Changing all NaN values to modes")
         for column in data.columns:
             data[column].fillna(data[column].mode()[0], inplace=True)
+        print('Data successfully cleaned')
 
-        print(data.head())
+    # current item is too simplistic, but it's a start.
 
-
-    
-    # for column, na_count in zip(data.columns, na_values):
-    #     if na_count < data_shape[0]*threshold:
-    #         print('oops')
-
-    #### Things to Check
+    #### Things to Handle Better
     # sparse columns
-        # dropping columns with na
-    # Missing rows
-        # using the mode or the mean
-    # Look for data that is out of place, a number when all th other respons are yes no
-    
-    # Extreme outliers
-    
+        # dropping columns with a lot of na
+        # ensure you always have at least two columns
+    # sparse row
+        # drop row if too many values
+    # after doing this, then recheck for threshold to see if it works then.        
 
+    #### Intelligent Items
+    # Look for data that is out of place, ex a number when should be yes/no
+    # Extreme outliers, when the orders of magnitude are off 
     
     ##### advanced cleaning
     # Address formatting
     # data formatting
-    # data formatting
+    # date formatting
     # spell checking
     
     return data
