@@ -55,8 +55,10 @@ def basic_clean_data(data):
     # after doing this, then recheck for threshold to see if it works then.        
 
     #### Intelligent Items
-    # Look for data that is out of place, ex a number when should be yes/no
+    # Look for data that is mislabeled, ex a number when should be yes/no
     # Extreme outliers, when the orders of magnitude are off 
+        # there are some different option PyOD, but htat requires keras and tensorflow
+        # sklearn has some outlier detection options
     
     ##### advanced cleaning
     # Address formatting
