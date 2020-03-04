@@ -58,7 +58,9 @@ def basic_clean_data(data):
     # Look for data that is mislabeled, ex a number when should be yes/no
     # Extreme outliers, when the orders of magnitude are off 
         # there are some different option PyOD, but htat requires keras and tensorflow
+        # https://pyod.readthedocs.io/en/latest/
         # sklearn has some outlier detection options
+        # https://scikit-learn.org/stable/auto_examples/plot_anomaly_comparison.html#sphx-glr-auto-examples-plot-anomaly-comparison-py
     
     ##### advanced cleaning
     # Address formatting
