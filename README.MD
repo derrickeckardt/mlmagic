@@ -16,3 +16,4 @@ where dataset is the dataset to use, classcolumn is the column to use for classi
 In order to test, below are a list of all the tests:
 
     python3 -m unittest test_supervise
+    python3 -m unittest test_data

@@ -8,7 +8,7 @@ def create_column_class(dataset, classcolumn, headers):
     # Read in Datafile
     missing_values = get_missing_values()
     raw_data = pd.read_csv(dataset, header=headers, na_values=missing_values)
-    data = basic_clean_data(raw_data)
+    data = basic_clean_data(raw_data,classcolumn)
     class_column = data[classcolumn]
     class_data = data.drop(classcolumn,1)
     return data, class_data, class_column
@@ -19,25 +19,34 @@ def get_missing_values():
     # issue warning about other ways it will not catch
     return missing_values
 
-def drop_sparse_columns():
-    
-    return 
+def drop_sparse_columns(data, row_count, classcolumn):
+    sparse_column_threshold = 0.10
+    for column, column_na_value in zip(data.columns,data.isna().sum()):
+        print(column, column_na_value)
+        if column_na_value / row_count > sparse_column_threshold and column != classcolumn :
+            print("dropping",column, column_na_value)
+            data = data.drop(columns=column)
+    print(data.head())
+    return data
 
 # current system is too simplistic, but it's a start.
-def basic_clean_data(data):
+def basic_clean_data(data, classcolumn):
     # First, identify how many
     row_drop_threshold = 0.05
-    row_na_count = data.isnull().any(axis=1).sum()
+    row_na_count = data.isna().any(axis=1).sum()
     na_values = data.isna().sum()
-    data_shape = data.shape
+    row_count = data.shape[0]
 
-    if row_na_count <= data_shape[0]*row_drop_threshold:
+    print()
+
+    if row_na_count <= row_count*row_drop_threshold:
         # just drop the rows
         print('Dropping rows with values that are NaN')
         data = data.dropna()
         # Option could be to just fill them with the mode
     else:
         # we can't just drop the rows
+        data = drop_sparse_columns(data, row_count, classcolumn)
         print("Changing all NaN values to modes")
         for column in data.columns:
             data[column].fillna(data[column].mode()[0], inplace=True)
