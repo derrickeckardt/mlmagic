@@ -26,7 +26,11 @@ def drop_sparse_columns(data, row_count, classcolumn):
         if column_na_value / row_count > sparse_column_threshold and column != classcolumn :
             print("dropping",column, column_na_value)
             data = data.drop(columns=column)
-    print(data.head())
+    return data
+
+def replace_with_mode(data):
+    for column in data.columns:
+        data[column].fillna(data[column].mode()[0], inplace=True)
     return data
 
 # current system is too simplistic, but it's a start.
@@ -43,13 +47,13 @@ def basic_clean_data(data, classcolumn):
         # just drop the rows
         print('Dropping rows with values that are NaN')
         data = data.dropna()
-        # Option could be to just fill them with the mode
     else:
         # we can't just drop the rows
+        # Removing sparse columns
+        print('Removing sparse columns')
         data = drop_sparse_columns(data, row_count, classcolumn)
-        print("Changing all NaN values to modes")
-        for column in data.columns:
-            data[column].fillna(data[column].mode()[0], inplace=True)
+        print("Changing all remaining NaN values to modes")
+        data = replace_with_mode(data)
         print('Data successfully cleaned')
 
     # Documentation Reference:
