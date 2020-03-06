@@ -25,10 +25,13 @@ class test_data(unittest.TestCase):
     
     def test_get_missing_values(self):
         self.assertTrue(True)
-    
+        
+    def test_drop_sparse_columns(self):
+        self.assertTrue(True)
+        
     def test_basic_clean_data(self):
         self.data, self.class_data, self.class_column = data.create_column_class(self.dataset, self.classcolumn, self.headers)
-        self.data = data.basic_clean_data(self.data)
+        self.data = data.basic_clean_data(self.data, self.classcolumn)
         self.assertEqual(self.data.isna().sum().sum(),0)
         
 if __name__ == '__main__':
