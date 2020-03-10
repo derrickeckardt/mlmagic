@@ -1,14 +1,10 @@
 # Features to Add
 
-## Automated data cleaning
-- eliminate rows with missing data, after seeing how much of the data it represents
-- or, replicating with common values
-
 ## Auto selecting the probable class column
 
+## Add outlier detection
 
 ## Auto selecting the header rows
-
 
 ## saving the models
 
