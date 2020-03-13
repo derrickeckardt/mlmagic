@@ -7,7 +7,7 @@ import data
 
 # Inputs
 dataset, classcolumn, headers, folds = sys.argv[1:]
-headers = None if headers == "None" else headers
+headers = None if headers == "None" else 0
 classcolumn = int(classcolumn) if headers == None else classcolumn
 folds = int(folds)
 

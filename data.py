@@ -50,6 +50,7 @@ def basic_clean_data(data, classcolumn):
         data = drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold)
         print("Changing all remaining NaN values to modes")
         data = replace_with_mode(data)
+        print(data.head())
         print('Data successfully cleaned')
 
     # Documentation Reference:
