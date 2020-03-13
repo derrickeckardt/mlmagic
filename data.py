@@ -33,6 +33,7 @@ def replace_with_mode(data):
 # current system is too simplistic, but it's a start.
 def basic_clean_data(data, classcolumn):
     # presets - make an option in production
+    print(data.describe())
     sparse_column_threshold = 0.10
     row_drop_threshold = 0.05
     row_na_count = data.isna().any(axis=1).sum()
@@ -50,7 +51,7 @@ def basic_clean_data(data, classcolumn):
         data = drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold)
         print("Changing all remaining NaN values to modes")
         data = replace_with_mode(data)
-        print(data.head())
+        print(data.describe())
         print('Data successfully cleaned')
 
     # Documentation Reference:
