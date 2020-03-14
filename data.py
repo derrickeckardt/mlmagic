@@ -22,7 +22,11 @@ def get_missing_values():
 def drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold):
     for column, column_na_value in zip(data.columns,data.isna().sum()):
         if column_na_value / row_count > sparse_column_threshold and column != classcolumn :
-            data = data.drop(columns=column)
+            print("Column '",column,"'has ",column_na_value/row_count," as NaN.  Do you want to drop it? (Y/N)")
+            drop_column_input = input()
+            if drop_column_input == "Y":
+                # data = data.drop(columns=column)
+                print("drop",column)
     return data
 
 def replace_with_mode(data):
@@ -51,7 +55,6 @@ def basic_clean_data(data, classcolumn):
         data = drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold)
         print("Changing all remaining NaN values to modes")
         data = replace_with_mode(data)
-        print(data.describe())
         print('Data successfully cleaned')
 
     # Documentation Reference:
