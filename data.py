@@ -35,9 +35,9 @@ def drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold):
                 if blank_input.lower() == "mode":
                     data = replace_with_mode(data)
                 elif blank_input.lower() == "0":
-                    data = replace_with_zero(data)
+                    data = replace_with(data, 0)
                 elif blank_input.lower() == "none":
-                    data = replace_with_none(data)
+                    data = replace_with(data, "none")
     return data
 
 def replace_with_mode(data):
@@ -45,16 +45,10 @@ def replace_with_mode(data):
         data[column].fillna(data[column].mode()[0], inplace=True)
     return data
     
-def replace_with_zero(data):
+def replace_with(data,value):
     for column in data.columns:
-        data[column].fillna(0, inplace=True)
+        data[column].fillna(value, inplace=True)
     return data
-
-def replace_with_none(data):
-    for column in data.columns:
-        data[column].fillna("None", inplace=True)
-    return data
-
 
 # current system is too simplistic, but it's a start.
 def basic_clean_data(data, classcolumn):
