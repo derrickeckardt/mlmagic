@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import OneHotEncoder
 
 # create data sets
 def create_column_class(dataset, classcolumn, headers):
@@ -23,16 +24,37 @@ def drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold):
     for column, column_na_value in zip(data.columns,data.isna().sum()):
         if column_na_value / row_count > sparse_column_threshold and column != classcolumn :
             print("Column '",column,"'has ",column_na_value/row_count," as NaN.  Do you want to drop it? (Y/N)")
-            drop_column_input = "" #input() commented out for testing
-            if drop_column_input == "Y":
+            drop_column_input = input() #commented out for testing
+            print(drop_column_input)
+            if drop_column_input.upper() == "Y":
                 # data = data.drop(columns=column)
                 print("drop",column)
+            elif drop_column_input.upper() == "N":
+                print("Would you like blanks to be the mode, 0, or None")
+                blank_input = input()
+                if blank_input.lower() == "mode":
+                    data = replace_with_mode(data)
+                elif blank_input.lower() == "0":
+                    data = replace_with_zero(data)
+                elif blank_input.lower() == "none":
+                    data = replace_with_none(data)
     return data
 
 def replace_with_mode(data):
     for column in data.columns:
         data[column].fillna(data[column].mode()[0], inplace=True)
     return data
+    
+def replace_with_zero(data):
+    for column in data.columns:
+        data[column].fillna(0, inplace=True)
+    return data
+
+def replace_with_none(data):
+    for column in data.columns:
+        data[column].fillna("None", inplace=True)
+    return data
+
 
 # current system is too simplistic, but it's a start.
 def basic_clean_data(data, classcolumn):
@@ -44,16 +66,6 @@ def basic_clean_data(data, classcolumn):
     na_values = data.isna().sum()
     row_count = data.shape[0]
 
-    # preprocessing data by encoding it
-
-    # from sklearn import preprocessing
-    # le = preprocessing.LabelEncoder()
-    # for i in data.columns:
-    #     data[:,i] = data.apply(le.fit_transform)#(data[:,i])
-
-    from sklearn.preprocessing import OneHotEncoder
-    data = OneHotEncoder().fit_transform(data)
-
     if row_na_count <= row_count*row_drop_threshold:
         # just drop the rows
         print('Dropping rows with values that are NaN')
@@ -63,9 +75,11 @@ def basic_clean_data(data, classcolumn):
         # Removing sparse columns
         print('Removing sparse columns')
         data = drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold)
-        print("Changing all remaining NaN values to modes")
-        data = replace_with_mode(data)
         print('Data successfully cleaned')
+
+    # preprocessing data by encoding it
+    data = OneHotEncoder().fit_transform(data)
+
 
     # Documentation Reference:
     # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html
