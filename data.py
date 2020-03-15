@@ -7,7 +7,7 @@ def create_column_class(dataset, classcolumn, headers):
     
     # Read in Datafile
     missing_values = get_missing_values()
-    raw_data = pd.read_csv(dataset, header=headers, na_values=missing_values)
+    raw_data = pd.read_csv(dataset, header=headers, na_values=missing_values, index_col='patient_id')
     data = basic_clean_data(raw_data,classcolumn)
     class_column = data[classcolumn]
     class_data = data.drop(classcolumn,1)
@@ -23,7 +23,7 @@ def drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold):
     for column, column_na_value in zip(data.columns,data.isna().sum()):
         if column_na_value / row_count > sparse_column_threshold and column != classcolumn :
             print("Column '",column,"'has ",column_na_value/row_count," as NaN.  Do you want to drop it? (Y/N)")
-            drop_column_input = input()
+            drop_column_input = "" #input() commented out for testing
             if drop_column_input == "Y":
                 # data = data.drop(columns=column)
                 print("drop",column)
@@ -43,6 +43,16 @@ def basic_clean_data(data, classcolumn):
     row_na_count = data.isna().any(axis=1).sum()
     na_values = data.isna().sum()
     row_count = data.shape[0]
+
+    # preprocessing data by encoding it
+
+    # from sklearn import preprocessing
+    # le = preprocessing.LabelEncoder()
+    # for i in data.columns:
+    #     data[:,i] = data.apply(le.fit_transform)#(data[:,i])
+
+    from sklearn.preprocessing import OneHotEncoder
+    data = OneHotEncoder().fit_transform(data)
 
     if row_na_count <= row_count*row_drop_threshold:
         # just drop the rows
