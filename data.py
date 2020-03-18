@@ -4,11 +4,11 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
 # create data sets
-def create_column_class(dataset, classcolumn, headers):
+def create_column_class(dataset, classcolumn, headers, index_column):
     
     # Read in Datafile
     missing_values = get_missing_values()
-    raw_data = pd.read_csv(dataset, header=headers, na_values=missing_values, index_col='patient_id')
+    raw_data = pd.read_csv(dataset, header=headers, na_values=missing_values, index_col=index_column)
     data = basic_clean_data(raw_data,classcolumn)
     class_column = data[classcolumn]
     class_data = data.drop(classcolumn,1)
@@ -38,6 +38,9 @@ def drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold):
                     data = replace_with(data, 0)
                 elif blank_input.lower() == "none":
                     data = replace_with(data, "none")
+                else:
+                    #other
+                    data = replace_with(data,blank_input.lower())
     return data
 
 def replace_with_mode(data):
@@ -53,8 +56,8 @@ def replace_with(data,value):
 # current system is too simplistic, but it's a start.
 def basic_clean_data(data, classcolumn):
     # presets - make an option in production
-    print(data.describe())
-    sparse_column_threshold = 0.10
+    print(data.head())
+    sparse_column_threshold = 0.01
     row_drop_threshold = 0.05
     row_na_count = data.isna().any(axis=1).sum()
     na_values = data.isna().sum()
@@ -71,8 +74,11 @@ def basic_clean_data(data, classcolumn):
         data = drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold)
         print('Data successfully cleaned')
 
+    print(data.head())
+
     # preprocessing data by encoding it
-    data = OneHotEncoder().fit_transform(data)
+    # data = OneHotEncoder().fit_transform(data)
+    print(data)
 
 
     # Documentation Reference:

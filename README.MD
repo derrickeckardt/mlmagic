@@ -6,9 +6,9 @@ ML Magic is a plug-and-play AI interface for setting up AI workflows.
 
 In order to run, use this command:
 
-    time ./index.py dataset classcolumn headers folds
-    time ./index.py data/iris.data 4 None 5
-    time ./index.py data/patient.csv state Yes 5
+    time ./index.py dataset classcolumn headers index_column folds
+    time ./index.py data/iris.data 4 None None 5
+    time ./index.py data/patient.csv state Yes 'patient_id' 5
     
  
 where dataset is the dataset to use, classcolumn is the column to use for classification, and headers indicates whether there are column titles.

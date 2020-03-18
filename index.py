@@ -6,13 +6,14 @@ import supervise
 import data
 
 # Inputs
-dataset, classcolumn, headers, folds = sys.argv[1:]
+dataset, classcolumn, headers, index_column, folds = sys.argv[1:]
 headers = None if headers == "None" else 0
 classcolumn = int(classcolumn) if headers == None else classcolumn
+index_column = index_column if index_column != "None" else None
 folds = int(folds)
 
 # Get data and create column and data sets
-data, class_data, class_column = data.create_column_class(dataset,classcolumn,headers)
+data, class_data, class_column = data.create_column_class(dataset,classcolumn,headers, index_column)
 
 # Create Cross-validation
 accuracies, classifiers = supervise.multiclass(folds,class_data,class_column)
