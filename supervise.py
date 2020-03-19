@@ -44,7 +44,6 @@ def multiclass(folds,class_data,class_column):
         # Cycle through all the classifiers, for this dataset
         for clf_name, classifier in classifiers:
             clf = classifier
-            print(clf_name)
             clf = clf.fit(x_train,y_train)
             predictions = clf.predict(x_test)
             accuracy = accuracy_score(y_test,predictions)

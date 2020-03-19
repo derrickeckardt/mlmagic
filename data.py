@@ -56,7 +56,6 @@ def replace_with(data,value):
 # current system is too simplistic, but it's a start.
 def basic_clean_data(data, classcolumn):
     # presets - make an option in production
-    print(data.head())
     sparse_column_threshold = 0.01
     row_drop_threshold = 0.05
     row_na_count = data.isna().any(axis=1).sum()
@@ -74,12 +73,8 @@ def basic_clean_data(data, classcolumn):
         data = drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold)
         print('Data successfully cleaned')
 
-    print(data.head())
-
     # preprocessing data by encoding it
     # data = OneHotEncoder().fit_transform(data)
-    print(data)
-
 
     # Documentation Reference:
     # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html
