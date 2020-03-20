@@ -25,12 +25,11 @@ def drop_sparse_columns(data, row_count, classcolumn, sparse_column_threshold):
         if column_na_value / row_count > sparse_column_threshold and column != classcolumn :
             print("Column '",column,"'has ",column_na_value/row_count," as NaN.  Do you want to drop it? (Y/N)")
             drop_column_input = input() #commented out for testing
-            print(drop_column_input)
             if drop_column_input.upper() == "Y":
                 # data = data.drop(columns=column)
                 print("drop",column)
             elif drop_column_input.upper() == "N":
-                print("Would you like blanks to be the mode, 0, or None")
+                print("Would you like blanks to be the mode, 0, None, or something else? If something else, just type it out.")
                 blank_input = input()
                 if blank_input.lower() == "mode":
                     data = replace_with_mode(data)
