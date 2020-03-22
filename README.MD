@@ -29,5 +29,6 @@ The codebase is built on python, and will ultimately be deployed into Django.
 
 The hardest part of any data prep.  ML Magic makes it easy, by making decisions for the user, autodetecting columns and making decisions for the user.  Of course, the user can do more work if you want it to, but why would you?
 
-### Supervise Learning
+### Supervised Learning
 
+Right now it runs through about ten different standard ML classifiers.
