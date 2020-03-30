@@ -1,3 +1,11 @@
+# DataMagic
+
+Preprocesses your data to make it ready for analysis.  System can work with user inputs, or allow DataMagic to do the hardwork for you, and just click go.
+
+----------------------------------------
+
+
+
 # ML Magic
 
 ML Magic is a plug-and-play AI interface for setting up AI workflows.
