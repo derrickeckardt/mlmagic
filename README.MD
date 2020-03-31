@@ -4,6 +4,9 @@ Preprocesses your data to make it ready for analysis.  System can work with user
 
 ----------------------------------------
 
+## First Order Logic
+
+If less an x percentage of rows are corrupt, then those rows are dropped.  This is the easy route.
 
 
 # ML Magic
