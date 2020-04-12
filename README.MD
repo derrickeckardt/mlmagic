@@ -8,6 +8,12 @@ Preprocesses your data to make it ready for analysis.  System can work with user
 
 If less an x percentage of rows are corrupt, then those rows are dropped.  This is the easy route.
 
+## Second Order Logic
+
+If the easiest fix doesn't work, then we have to look at the different types of data.
+
+It's important to know how this data will be used.
+
 
 # ML Magic
 

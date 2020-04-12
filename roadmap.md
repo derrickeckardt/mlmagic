@@ -1,4 +1,7 @@
-# Features to Add
+# Features for Just the DataMagic portion
+
+
+# Features to Add for Full-ledged software to do all the parts
 
 ## Auto selecting the probable class column
 
