@@ -14,6 +14,12 @@ If the easiest fix doesn't work, then we have to look at the different types of 
 
 It's important to know how this data will be used.
 
+### First Is It Categorical Data for Supervised Learning
+
+- Assume last column
+- Identify any column that could potentially be it.
+
+
 
 # ML Magic
 
